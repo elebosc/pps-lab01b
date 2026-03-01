@@ -1,5 +1,5 @@
 [versions]
-junit = "5.9.3"
+junit = "5.14.3"
 jdk = "25"
 
 [libraries]
