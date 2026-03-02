@@ -10,13 +10,15 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class GoldBankAccountTest extends AbstractBankAccountTest {
 
+    @Override
     @BeforeEach
-    void initTest() {
+    public void initTest() {
         initAccount(new GoldBankAccount(new CoreBankAccount()));
     }
 
+    @Override
     @Test
-    public void testWithdrawalIsPerformedCorrectly() {
+    public void testWithdrawalIsPerformedIfPossible() {
         final int withdrawalAmount = 200;
         final int expectedRemainingAmount = FIRST_DEPOSIT_AMOUNT - withdrawalAmount;
         getAccount().deposit(FIRST_DEPOSIT_AMOUNT);
