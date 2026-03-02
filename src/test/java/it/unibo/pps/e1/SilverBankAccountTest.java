@@ -35,7 +35,7 @@ public class SilverBankAccountTest {
     @Test
     public void testCanWithdraw() {
         final int withdrawalAmount = 200;
-        final int expectedRemainingAmount = 799;
+        final int expectedRemainingAmount = FIRST_DEPOSIT_AMOUNT - (withdrawalAmount + SilverBankAccount.FEE);
         this.account.deposit(FIRST_DEPOSIT_AMOUNT);
         this.account.withdraw(withdrawalAmount);
         assertEquals(expectedRemainingAmount, this.account.getBalance());
@@ -46,6 +46,37 @@ public class SilverBankAccountTest {
         final int withdrawalAmount = 1200;
         this.account.deposit(FIRST_DEPOSIT_AMOUNT);
         assertThrows(IllegalStateException.class, () -> this.account.withdraw(withdrawalAmount));
+    }
+
+    @Test
+    public void testWithdrawalCannotExceedWithFee() {
+        final int withdrawalAmount = FIRST_DEPOSIT_AMOUNT + SilverBankAccount.FEE;
+        this.account.deposit(FIRST_DEPOSIT_AMOUNT);
+        assertThrows(IllegalStateException.class, () -> this.account.withdraw(withdrawalAmount));
+    }
+
+    @Test
+    public void testCannotDepositNegativeAmount() {
+        final int negativeAmount = -100;
+        assertThrows(IllegalArgumentException.class, () -> this.account.deposit(negativeAmount));
+    }
+
+    @Test
+    public void testCannotDepositNullAmount() {
+        final int nullAmount = 0;
+        assertThrows(IllegalArgumentException.class, () -> this.account.deposit(nullAmount));
+    }
+
+    @Test
+    public void testCannotWithdrawNegativeAmount() {
+        final int negativeAmount = -100;
+        assertThrows(IllegalArgumentException.class, () -> this.account.withdraw(negativeAmount));
+    }
+
+    @Test
+    public void testCannotWithdrawNullAmount() {
+        final int nullAmount = 0;
+        assertThrows(IllegalArgumentException.class, () -> this.account.withdraw(nullAmount));
     }
 
 }

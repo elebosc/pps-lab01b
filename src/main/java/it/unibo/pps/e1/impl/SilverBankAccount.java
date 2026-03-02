@@ -4,7 +4,7 @@ import it.unibo.pps.e1.api.BankAccount;
 
 public class SilverBankAccount implements BankAccount {
 
-    private final static int FEE = 1;
+    public final static int FEE = 1;
 
     private final CoreBankAccount base;
 
@@ -17,13 +17,20 @@ public class SilverBankAccount implements BankAccount {
     }
 
     public void deposit(int amount) {
+        if (amount <= 0) {
+            throw new IllegalArgumentException("Deposited amount cannot be negative or null.");
+        }
         base.deposit(amount);
     }
 
     public void withdraw(int amount) {
+        if (amount <= 0) {
+            throw new IllegalArgumentException("Withdrawn amount cannot be negative or null.");
+        }
         if (this.getBalance() < amount + FEE){
-            throw new IllegalStateException();
+            throw new IllegalStateException("Cannot withdraw more than the available balance.");
         }
         base.withdraw(amount + FEE);
     }
+
 }
