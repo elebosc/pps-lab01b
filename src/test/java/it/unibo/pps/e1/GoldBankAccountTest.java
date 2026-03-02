@@ -1,39 +1,41 @@
 package it.unibo.pps.e1;
 
 import it.unibo.pps.e1.impl.CoreBankAccount;
-import it.unibo.pps.e1.impl.SilverBankAccount;
+import it.unibo.pps.e1.impl.GoldBankAccount;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public class SilverBankAccountTest extends AbstractBankAccountTest {
+public class GoldBankAccountTest extends AbstractBankAccountTest {
 
     @BeforeEach
     void initTest() {
-        initAccount(new SilverBankAccount(new CoreBankAccount()));
+        initAccount(new GoldBankAccount(new CoreBankAccount()));
     }
 
     @Test
     public void testWithdrawalIsPerformedCorrectly() {
         final int withdrawalAmount = 200;
-        final int expectedRemainingAmount = FIRST_DEPOSIT_AMOUNT - (withdrawalAmount + SilverBankAccount.FEE);
+        final int expectedRemainingAmount = FIRST_DEPOSIT_AMOUNT - withdrawalAmount;
         getAccount().deposit(FIRST_DEPOSIT_AMOUNT);
         getAccount().withdraw(withdrawalAmount);
         assertEquals(expectedRemainingAmount, getAccount().getBalance());
     }
 
     @Test
-    public void testCannotWithdrawMoreThanAvailable() {
-        final int withdrawalAmount = 1200;
-       getAccount().deposit(FIRST_DEPOSIT_AMOUNT);
-        assertThrows(IllegalStateException.class, () -> getAccount().withdraw(withdrawalAmount));
+    public void testCanWithdrawIfOverdraftIsLowerThanTheLimit() {
+        final int withdrawalAmount = 1100;
+        final int expectedBalance = -100;
+        getAccount().deposit(FIRST_DEPOSIT_AMOUNT);
+        getAccount().withdraw(withdrawalAmount);
+        assertEquals(expectedBalance, getAccount().getBalance());
     }
 
     @Test
-    public void testWithdrawalCannotExceedWithFee() {
-        final int withdrawalAmount = FIRST_DEPOSIT_AMOUNT + SilverBankAccount.FEE;
+    public void testCannotWithdrawIfOverdraftHigherThanTheLimit() {
+        final int withdrawalAmount = FIRST_DEPOSIT_AMOUNT - GoldBankAccount.MAX_OVERDRAFT_AMOUNT + 1;
         getAccount().deposit(FIRST_DEPOSIT_AMOUNT);
         assertThrows(IllegalStateException.class, () -> getAccount().withdraw(withdrawalAmount));
     }
