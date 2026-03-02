@@ -1,6 +1,6 @@
-package it.unibo.pps.e1;
+package it.unibo.pps.e1.impl;
 
-class CoreBankAccount {
+public class CoreBankAccount {
 
     private int balance = 0;
 
@@ -15,4 +15,5 @@ class CoreBankAccount {
     public void withdraw(int amount) {
         this.balance = this.balance - amount;
     }
+
 }
