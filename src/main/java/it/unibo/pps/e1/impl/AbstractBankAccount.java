@@ -2,6 +2,9 @@ package it.unibo.pps.e1.impl;
 
 import it.unibo.pps.e1.api.BankAccount;
 
+/**
+ * This class is an abstraction over the different types of bank account.
+ */
 public abstract class AbstractBankAccount implements BankAccount {
 
     private final BankAccount base;

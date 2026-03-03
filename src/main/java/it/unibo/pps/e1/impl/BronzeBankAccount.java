@@ -2,6 +2,11 @@ package it.unibo.pps.e1.impl;
 
 import it.unibo.pps.e1.api.BankAccount;
 
+/**
+ * This class implements a bank account that applies a fee only if
+ * the withdrawn amount is higher than a certain value, but
+ * allows no overdraft.
+ */
 public class BronzeBankAccount extends AbstractBankAccount {
 
     public static final int MIN_WITHDRAWAL_AMOUNT_WITH_FEE = 100;

@@ -2,6 +2,10 @@ package it.unibo.pps.e1.impl;
 
 import it.unibo.pps.e1.api.BankAccount;
 
+/**
+ * This class implements a bank account that applies no fees on withdrawal
+ * and allows a limited overdraft.
+ */
 public class GoldBankAccount extends AbstractBankAccount {
 
     public static final int MAX_OVERDRAFT_AMOUNT = -500;

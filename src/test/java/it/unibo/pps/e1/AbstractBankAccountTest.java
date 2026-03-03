@@ -7,6 +7,10 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
+/**
+ * This class provides an abstraction over the test suites for the
+ * different bank accounts.
+ */
 public abstract class AbstractBankAccountTest {
 
     protected final int FIRST_DEPOSIT_AMOUNT = 1000;

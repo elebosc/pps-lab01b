@@ -2,6 +2,9 @@ package it.unibo.pps.e1.impl;
 
 import it.unibo.pps.e1.api.BankAccount;
 
+/**
+ * This class provides the very core operations of a bank account.
+ */
 public class CoreBankAccount implements BankAccount {
 
     private int balance = 0;
