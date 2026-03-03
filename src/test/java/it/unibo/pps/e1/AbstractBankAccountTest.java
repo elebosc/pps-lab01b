@@ -22,7 +22,7 @@ public abstract class AbstractBankAccountTest {
     }
 
     @BeforeEach
-    abstract void initTest();
+    protected abstract void initTest();
 
     @Test
     public void testInitiallyEmpty() {

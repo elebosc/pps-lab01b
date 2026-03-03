@@ -12,12 +12,12 @@ public class BronzeBankAccount extends AbstractBankAccount {
     }
 
     @Override
-    int getFee(int amount) {
+    protected int getFee(int amount) {
         return (amount < MIN_WITHDRAWAL_AMOUNT_WITH_FEE) ? 0 : FEE;
     }
 
     @Override
-    int getAllowedOverdraft() {
+    protected int getAllowedOverdraft() {
         return 0;
     }
 

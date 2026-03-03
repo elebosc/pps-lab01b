@@ -11,12 +11,12 @@ public class GoldBankAccount extends AbstractBankAccount {
     }
 
     @Override
-    int getFee(int amount) {
+    protected int getFee(int amount) {
         return 0;
     }
 
     @Override
-    int getAllowedOverdraft() {
+    protected int getAllowedOverdraft() {
         return MAX_OVERDRAFT_AMOUNT;
     }
 

@@ -11,12 +11,12 @@ public class SilverBankAccount extends AbstractBankAccount {
     }
 
     @Override
-    int getFee(int amount) {
+    protected int getFee(int amount) {
         return FEE;
     }
 
     @Override
-    int getAllowedOverdraft() {
+    protected int getAllowedOverdraft() {
         return 0;
     }
 

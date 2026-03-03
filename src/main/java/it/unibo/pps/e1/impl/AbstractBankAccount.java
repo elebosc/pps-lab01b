@@ -14,25 +14,27 @@ public abstract class AbstractBankAccount implements BankAccount {
         return base.getBalance();
     }
 
-    public void deposit(int amount) {
+    private void checkAmountIsNotNegativeOrNull(int amount) {
         if (amount <= 0) {
-            throw new IllegalArgumentException("Deposited amount cannot be negative or null.");
+            throw new IllegalArgumentException("Amount cannot be negative or null.");
         }
+    }
+
+    public void deposit(int amount) {
+        checkAmountIsNotNegativeOrNull(amount);
         base.deposit(amount);
     }
 
     public void withdraw(int amount) {
-        if (amount <= 0) {
-            throw new IllegalArgumentException("Withdrawn amount cannot be negative or null.");
-        }
+        checkAmountIsNotNegativeOrNull(amount);
         if (this.getBalance() - (amount + getFee(amount)) < getAllowedOverdraft()){
             throw new IllegalStateException("Cannot withdraw if the resulting balance is lower than " + getAllowedOverdraft());
         }
         base.withdraw(amount + getFee(amount));
     }
 
-    abstract int getFee(int amount);
+    protected abstract int getFee(int amount);
 
-    abstract int getAllowedOverdraft();
+    protected abstract int getAllowedOverdraft();
 
 }
