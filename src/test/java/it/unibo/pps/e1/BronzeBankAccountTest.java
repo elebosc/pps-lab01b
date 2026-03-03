@@ -15,7 +15,6 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
  */
 public class BronzeBankAccountTest extends AbstractBankAccountTest {
 
-    @Override
     @BeforeEach
     public void initTest() {
         initAccount(new BronzeBankAccount(new CoreBankAccount()));

@@ -1,7 +1,6 @@
 package it.unibo.pps.e1;
 
 import it.unibo.pps.e1.api.BankAccount;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -25,17 +24,14 @@ public abstract class AbstractBankAccountTest {
         return this.account;
     }
 
-    @BeforeEach
-    protected abstract void initTest();
-
     @Test
-    public void testInitiallyEmpty() {
+        public void testAccountIsInitiallyEmpty() {
         final int expectedInitialBalance = 0;
         assertEquals(expectedInitialBalance, this.account.getBalance());
     }
 
     @Test
-    public void testCanDeposit() {
+    public void testDepositIsPerformed() {
         this.account.deposit(FIRST_DEPOSIT_AMOUNT);
         assertEquals(FIRST_DEPOSIT_AMOUNT, this.account.getBalance());
     }
