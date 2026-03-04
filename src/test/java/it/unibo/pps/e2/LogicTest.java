@@ -2,59 +2,15 @@ package it.unibo.pps.e2;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.util.List;
-
 import static org.junit.jupiter.api.Assertions.*;
 
 public class LogicTest {
 
   private static final int BOARD_SIZE = 5;
-  private static final int SEED = 0;
-  private static final List<Pair<Integer, Integer>> ALLOWED_KNIGHT_MOVES_OFFSETS = List.of(
-      new Pair<>(-2, -1),
-      new Pair<>(-1, 2),
-      new Pair<>(2, 1),
-      new Pair<>(1, -2)
-  );
+  private static final Pair<Integer, Integer> INITIAL_KNIGHT_POSITION = new Pair<>(1, 0);
+  private static final Pair<Integer, Integer> PAWN_POSITION = new Pair<>(0, 2);
 
   private Logics logic;
-  private Pair<Integer, Integer> initialKnightPosition;
-  private Pair<Integer, Integer> pawnPosition;
-
-  private Pair<Integer, Integer> getKnightPosition() {
-    for (int i = 0; i < BOARD_SIZE; i++) {
-      for (int j = 0; j < BOARD_SIZE; j++) {
-        if (logic.hasKnight(i, j)) {
-          return new Pair<>(i, j);
-        }
-      }
-    }
-    throw new IllegalStateException("Knight not found.");
-  }
-
-  private Pair<Integer, Integer> getPawnPosition() {
-    for (int i = 0; i < BOARD_SIZE; i++) {
-      for (int j = 0; j < BOARD_SIZE; j++) {
-        if (logic.hasPawn(i, j)) {
-          return new Pair<>(i, j);
-        }
-      }
-    }
-    throw new IllegalStateException("Pawn not found.");
-  }
-
-  private Pair<Integer, Integer> getFirstAllowedMoveOffsets(Pair<Integer, Integer> initialPosition) {
-    for (final Pair<Integer, Integer> moveOffsets : ALLOWED_KNIGHT_MOVES_OFFSETS) {
-      if (
-        initialPosition.getX() + moveOffsets.getX() >= 0
-        && initialPosition.getX() + moveOffsets.getX() < BOARD_SIZE
-        && initialPosition.getY() + moveOffsets.getY() >= 0
-        && initialPosition.getY() + moveOffsets.getY() < BOARD_SIZE) {
-        return moveOffsets;
-      }
-    }
-    throw new IllegalStateException("No allowed moves found");
-  }
 
   private int getNotAllowedMoveOffset(int position) {
     return (position == BOARD_SIZE - 1) ? -1 : 1;
@@ -67,16 +23,6 @@ public class LogicTest {
     );
   }
 
-  private Pair<Integer, Integer> makeFirstValidAllowedMove(Pair<Integer, Integer> initialPosition) {
-    final Pair<Integer, Integer> moveOffsets = getFirstAllowedMoveOffsets(initialPosition);
-    final Pair<Integer, Integer> targetPosition = new Pair<>(
-        initialPosition.getX() + moveOffsets.getX(),
-        initialPosition.getY() + moveOffsets.getY()
-    );
-    logic.hit(targetPosition.getX(), targetPosition.getY());
-    return targetPosition;
-  }
-
   private Pair<Integer, Integer> attemptNotAllowedMove(Pair<Integer, Integer> initialPosition) {
     final Pair<Integer, Integer> notAllowedMoveOffset = new Pair<>(
         getNotAllowedMoveOffset(initialPosition.getX()),
@@ -87,74 +33,55 @@ public class LogicTest {
     return targetPosition;
   }
 
-  private void makeMoves(List<Pair<Integer, Integer>> targets) {
-    targets.forEach((target) -> logic.hit(target.getX(), target.getY()));
-  }
-
   @BeforeEach
   public void initTest() {
-    this.logic = new LogicsImpl(BOARD_SIZE, SEED);
-    this.initialKnightPosition = getKnightPosition();
-    this.pawnPosition = getPawnPosition();
-  }
-
-  @Test
-  public void testKnightAndPawnAreInitiallyNotAtTheSamePosition() {
-    assertNotSame(initialKnightPosition, pawnPosition);
+    this.logic = new LogicsImpl(BOARD_SIZE, INITIAL_KNIGHT_POSITION, PAWN_POSITION);
   }
 
   @Test
   public void testKnightIsDetectedAtItsInitialPosition() {
-    assertTrue(logic.hasKnight(initialKnightPosition.getX(), initialKnightPosition.getY()));
+    assertTrue(logic.hasKnight(INITIAL_KNIGHT_POSITION.getX(), INITIAL_KNIGHT_POSITION.getY()));
   }
 
   @Test
   public void testKnightIsNotDetectedOutsideItsPosition() {
-    final Pair<Integer, Integer> wrongPosition = new Pair<>(
-      initialKnightPosition.getX() + 1,
-      initialKnightPosition.getY() + 1
-    );
+    final Pair<Integer, Integer> wrongPosition = new Pair<>(INITIAL_KNIGHT_POSITION.getX() + 1, INITIAL_KNIGHT_POSITION.getY() + 1);
     assertFalse(logic.hasKnight(wrongPosition.getX(), wrongPosition.getY()));
   }
 
   @Test
   public void testPawnIsDetectedAtItsInitialPosition() {
-    assertTrue(logic.hasPawn(pawnPosition.getX(), pawnPosition.getY()));
+    assertTrue(logic.hasPawn(PAWN_POSITION.getX(), PAWN_POSITION.getY()));
   }
 
   @Test
   public void testPawnIsNotDetectedOutsideItsPosition() {
-    final Pair<Integer, Integer> wrongPosition = new Pair<>(
-      pawnPosition.getX() + 1,
-      pawnPosition.getY() + 1
-    );
+    final Pair<Integer, Integer> wrongPosition = new Pair<>(PAWN_POSITION.getX() + 1, PAWN_POSITION.getY() + 1);
     assertFalse(logic.hasPawn(wrongPosition.getX(), wrongPosition.getY()));
   }
 
   @Test
   public void testKnightMakesAllowedMove() {
-    final Pair<Integer, Integer> targetPosition = makeFirstValidAllowedMove(initialKnightPosition);
+    final Pair<Integer, Integer> targetPosition = new Pair<>(3, 1);
+    logic.hit(targetPosition.getX(), targetPosition.getY());
     assertTrue(logic.hasKnight(targetPosition.getX(), targetPosition.getY()));
   }
 
   @Test
-  public void testKnightMoveIsNotMadeIfNotAllowed() {
-    final Pair<Integer, Integer> targetPosition = attemptNotAllowedMove(initialKnightPosition);
-    assertFalse(logic.hasKnight(targetPosition.getX(), targetPosition.getY()));
+  public void testKnightDoesNotMakeNotAllowedMove() {
+    final Pair<Integer, Integer> notAllowedTargetPosition = new Pair<>(INITIAL_KNIGHT_POSITION.getX() + 1, INITIAL_KNIGHT_POSITION.getY() + 1);
+    logic.hit(notAllowedTargetPosition.getX(), notAllowedTargetPosition.getY());
+    assertFalse(logic.hasKnight(notAllowedTargetPosition.getX(), notAllowedTargetPosition.getY()));
   }
 
   @Test
   public void testKnightHitsPawnWhenMovingToItsPosition() {
-    makeMoves(List.of(
-        new Pair<>(3, 4),
-        new Pair<>(2, 2)
-    ));
-    assertTrue(logic.hit(pawnPosition.getX(), pawnPosition.getY()));
+    assertTrue(logic.hit(PAWN_POSITION.getX(), PAWN_POSITION.getY()));
   }
 
   @Test
   public void testKnightDoesNotHitPawnIfItMissesIt() {
-    final Pair<Integer, Integer> targetPosition = new Pair<>(3, 4);
+    final Pair<Integer, Integer> targetPosition = new Pair<>(3, 1);
     assertFalse(logic.hit(targetPosition.getX(), targetPosition.getY()));
   }
 
