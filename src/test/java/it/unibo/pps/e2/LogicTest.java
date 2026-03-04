@@ -12,27 +12,6 @@ public class LogicTest {
 
   private Logics logic;
 
-  private int getNotAllowedMoveOffset(int position) {
-    return (position == BOARD_SIZE - 1) ? -1 : 1;
-  }
-
-  private Pair<Integer, Integer> getTargetPosition(Pair<Integer, Integer> initialPosition, Pair<Integer, Integer> moveOffsets) {
-    return new Pair<>(
-    initialPosition.getX() + moveOffsets.getX(),
-    initialPosition.getY() + moveOffsets.getY()
-    );
-  }
-
-  private Pair<Integer, Integer> attemptNotAllowedMove(Pair<Integer, Integer> initialPosition) {
-    final Pair<Integer, Integer> notAllowedMoveOffset = new Pair<>(
-        getNotAllowedMoveOffset(initialPosition.getX()),
-        getNotAllowedMoveOffset(initialPosition.getY())
-    );
-    final Pair<Integer, Integer> targetPosition = getTargetPosition(initialPosition, notAllowedMoveOffset);
-    logic.hit(targetPosition.getX(), targetPosition.getY());
-    return targetPosition;
-  }
-
   @BeforeEach
   public void initTest() {
     this.logic = new LogicsImpl(BOARD_SIZE, INITIAL_KNIGHT_POSITION, PAWN_POSITION);
