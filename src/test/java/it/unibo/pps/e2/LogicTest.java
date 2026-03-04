@@ -53,6 +53,10 @@ public class LogicTest {
     throw new IllegalStateException("No allowed moves found");
   }
 
+  private int getNotAllowedMoveOffset(int position) {
+    return (position == BOARD_SIZE - 1) ? -1 : 1;
+  }
+
   @BeforeEach
   public void initTest() {
     this.logic = new LogicsImpl(BOARD_SIZE, SEED);
@@ -74,6 +78,20 @@ public class LogicTest {
     );
     logic.hit(targetCell.getX(), targetCell.getY());
     assertTrue(logic.hasKnight(targetCell.getX(), targetCell.getY()));
+  }
+
+  @Test
+  public void testKnightMoveIsNotMadeIfNotAllowed() {
+    final Pair<Integer, Integer> notAllowedMoveOffset = new Pair<>(
+        getNotAllowedMoveOffset(initialKnightPosition.getX()),
+        getNotAllowedMoveOffset(initialKnightPosition.getY())
+    );
+    final Pair<Integer, Integer> targetCell = new Pair<>(
+    initialKnightPosition.getX() + notAllowedMoveOffset.getX(),
+    initialKnightPosition.getY() + notAllowedMoveOffset.getY()
+    );
+    logic.hit(targetCell.getX(), targetCell.getY());
+    assertTrue(logic.hasKnight(initialKnightPosition.getX(), initialKnightPosition.getY()));
   }
 
 }
