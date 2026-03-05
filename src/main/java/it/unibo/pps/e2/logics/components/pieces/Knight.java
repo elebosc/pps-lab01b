@@ -8,4 +8,6 @@ public interface Knight {
 
     void setPosition(Pair<Integer, Integer> position);
 
+    boolean canMoveToPosition(Pair<Integer, Integer> position);
+
 }
