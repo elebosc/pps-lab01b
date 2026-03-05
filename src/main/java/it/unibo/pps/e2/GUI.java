@@ -1,5 +1,8 @@
 package it.unibo.pps.e2;
 
+import it.unibo.pps.e2.logics.Logics;
+import it.unibo.pps.e2.logics.LogicsImpl;
+
 import javax.swing.*;
 import java.util.*;
 import java.util.Map.Entry;
@@ -24,7 +27,7 @@ public class GUI extends JFrame {
         ActionListener al = (e)->{
             final JButton bt = (JButton)e.getSource();
             final Pair<Integer,Integer> pos = buttons.get(bt);
-            if (logics.hit(pos.getX(),pos.getY())) {
+            if (logics.hit(pos)) {
             	System.exit(0);
             } else {
                 draw();            	
@@ -45,8 +48,8 @@ public class GUI extends JFrame {
     
     private void draw() {
     	for (Entry<JButton,Pair<Integer,Integer>> entry: this.buttons.entrySet()) {
-    		String str = logics.hasPawn(entry.getValue().getX(), entry.getValue().getY()) ? "*" :
-    					 logics.hasKnight(entry.getValue().getX(), entry.getValue().getY()) ? "K" : " ";
+    		String str = logics.hasPawn(entry.getValue()) ? "*" :
+    					 logics.hasKnight(entry.getValue()) ? "K" : " ";
     		entry.getKey().setText(str);
     	}
     }

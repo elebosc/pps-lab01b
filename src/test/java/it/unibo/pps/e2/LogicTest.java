@@ -1,6 +1,10 @@
 package it.unibo.pps.e2;
+import it.unibo.pps.e2.logics.Logics;
+import it.unibo.pps.e2.logics.LogicsImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -19,49 +23,61 @@ public class LogicTest {
 
   @Test
   public void testKnightIsDetectedAtItsInitialPosition() {
-    assertTrue(logic.hasKnight(INITIAL_KNIGHT_POSITION.getX(), INITIAL_KNIGHT_POSITION.getY()));
+    assertTrue(logic.hasKnight(INITIAL_KNIGHT_POSITION));
   }
 
   @Test
   public void testKnightIsNotDetectedOutsideItsPosition() {
     final Pair<Integer, Integer> wrongPosition = new Pair<>(INITIAL_KNIGHT_POSITION.getX() + 1, INITIAL_KNIGHT_POSITION.getY() + 1);
-    assertFalse(logic.hasKnight(wrongPosition.getX(), wrongPosition.getY()));
+    assertFalse(logic.hasKnight(wrongPosition));
   }
 
   @Test
   public void testPawnIsDetectedAtItsInitialPosition() {
-    assertTrue(logic.hasPawn(PAWN_POSITION.getX(), PAWN_POSITION.getY()));
+    assertTrue(logic.hasPawn(PAWN_POSITION));
   }
 
   @Test
   public void testPawnIsNotDetectedOutsideItsPosition() {
     final Pair<Integer, Integer> wrongPosition = new Pair<>(PAWN_POSITION.getX() + 1, PAWN_POSITION.getY() + 1);
-    assertFalse(logic.hasPawn(wrongPosition.getX(), wrongPosition.getY()));
+    assertFalse(logic.hasPawn(wrongPosition));
   }
 
   @Test
   public void testKnightMakesAllowedMove() {
     final Pair<Integer, Integer> targetPosition = new Pair<>(3, 1);
-    logic.hit(targetPosition.getX(), targetPosition.getY());
-    assertTrue(logic.hasKnight(targetPosition.getX(), targetPosition.getY()));
+    logic.hit(targetPosition);
+    assertTrue(logic.hasKnight(targetPosition));
   }
 
   @Test
   public void testKnightDoesNotMakeNotAllowedMove() {
     final Pair<Integer, Integer> notAllowedTargetPosition = new Pair<>(INITIAL_KNIGHT_POSITION.getX() + 1, INITIAL_KNIGHT_POSITION.getY() + 1);
-    logic.hit(notAllowedTargetPosition.getX(), notAllowedTargetPosition.getY());
-    assertFalse(logic.hasKnight(notAllowedTargetPosition.getX(), notAllowedTargetPosition.getY()));
+    logic.hit(notAllowedTargetPosition);
+    assertFalse(logic.hasKnight(notAllowedTargetPosition));
   }
 
   @Test
   public void testKnightHitsPawnWhenMovingToItsPosition() {
-    assertTrue(logic.hit(PAWN_POSITION.getX(), PAWN_POSITION.getY()));
+    assertTrue(logic.hit(PAWN_POSITION));
   }
 
   @Test
   public void testKnightDoesNotHitPawnIfItMissesIt() {
     final Pair<Integer, Integer> targetPosition = new Pair<>(3, 1);
-    assertFalse(logic.hit(targetPosition.getX(), targetPosition.getY()));
+    assertFalse(logic.hit(targetPosition));
+  }
+
+  @ParameterizedTest
+  @CsvSource({
+      "-1, 0",
+      "0, -1",
+      BOARD_SIZE + ", 0",
+      "0, " + BOARD_SIZE
+  })
+  public void testCannotMoveToOutOfBoundPosition(int row, int column) {
+    final Pair<Integer, Integer> outOfBoundPosition = new Pair<>(row, column);
+    assertThrows(IndexOutOfBoundsException.class, () -> logic.hit(outOfBoundPosition));
   }
 
 }

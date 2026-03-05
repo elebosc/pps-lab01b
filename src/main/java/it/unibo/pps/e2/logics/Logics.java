@@ -1,27 +1,27 @@
-package it.unibo.pps.e2;
+package it.unibo.pps.e2.logics;
+
+import it.unibo.pps.e2.Pair;
 
 public interface Logics{
     
     /**
      * attempt to move Knight on position row,col, if possible
      * 
-     * @param row
-     * @param col
+     * @param position
      * @return whether the pawn has been hit 
      */
-    boolean hit(int row, int col);
+    boolean hit(Pair<Integer, Integer> position);
     
     /**
-     * @param row
-     * @param col
+     * @param position
      * @return whether position row,col has the knight
      */
-    boolean hasKnight(int row, int col);
+    boolean hasKnight(Pair<Integer, Integer> position);
     
     /**
-     * @param row
-     * @param col
+     * @param position
      * @return whether position row,col has the pawn
      */
-    boolean hasPawn(int row, int col);
+    boolean hasPawn(Pair<Integer, Integer> position);
+
 }
