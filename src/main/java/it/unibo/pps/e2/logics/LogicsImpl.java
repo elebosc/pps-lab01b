@@ -33,13 +33,13 @@ public class LogicsImpl implements Logics {
 	}
 
 	@Override
-	public boolean isThereKnightAtPosition(Pair<Integer, Integer> position) {
-		return this.board.getKnightPosition().equals(position);
+	public boolean isKnightAtPosition(Pair<Integer, Integer> position) {
+		return this.board.isKnightAtPosition(position);
 	}
 
 	@Override
-	public boolean isTherePawnAtPosition(Pair<Integer, Integer> position) {
-		return this.board.getPawnPosition().equals(position);
+	public boolean isPawnAtPosition(Pair<Integer, Integer> position) {
+		return this.board.isPawnAtPosition(position);
 	}
 
 }

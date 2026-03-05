@@ -4,6 +4,6 @@ import it.unibo.pps.e2.logics.components.Pair;
 
 public interface Pawn {
 
-    Pair<Integer, Integer> getPosition();
+    Pair<Integer, Integer> position();
 
 }

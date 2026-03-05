@@ -12,8 +12,8 @@ public interface Board {
 
     boolean hasKnightHitPawn();
 
-    Pair<Integer, Integer> getKnightPosition();
+    boolean isKnightAtPosition(Pair<Integer, Integer> position);
 
-    Pair<Integer, Integer> getPawnPosition();
+    boolean isPawnAtPosition(Pair<Integer, Integer> position);
 
 }

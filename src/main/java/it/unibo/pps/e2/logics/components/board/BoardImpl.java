@@ -34,7 +34,7 @@ public class BoardImpl implements Board {
         final Random random = new Random(seed);
         Pair<Integer,Integer> position = new Pair<>(random.nextInt(this.size), random.nextInt(this.size));
         if (this.pawn != null) {
-            while (this.pawn.getPosition().equals(position)) {
+            while (this.pawn.position().equals(position)) {
                 position = new Pair<>(random.nextInt(this.size), random.nextInt(this.size));
             }
         }
@@ -59,17 +59,18 @@ public class BoardImpl implements Board {
 
     @Override
     public boolean hasKnightHitPawn() {
-        return this.pawn.getPosition().equals(this.knight.getPosition());
+        return this.knight.getPosition().equals(this.pawn.position());
     }
 
     @Override
-    public Pair<Integer, Integer> getKnightPosition() {
-        return this.knight.getPosition();
+    public boolean isKnightAtPosition(Pair<Integer, Integer> position) {
+        return this.knight.getPosition().equals(position);
     }
 
     @Override
-    public Pair<Integer, Integer> getPawnPosition() {
-        return this.pawn.getPosition();
+    public boolean isPawnAtPosition(Pair<Integer, Integer> position) {
+        return this.pawn.position().equals(position);
     }
+
 
 }
