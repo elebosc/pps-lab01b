@@ -24,49 +24,49 @@ public class LogicTest {
 
   @Test
   public void testKnightIsDetectedAtItsInitialPosition() {
-    assertTrue(logic.hasKnight(INITIAL_KNIGHT_POSITION));
+    assertTrue(logic.isThereKnightAtPosition(INITIAL_KNIGHT_POSITION));
   }
 
   @Test
   public void testKnightIsNotDetectedOutsideItsPosition() {
     final Pair<Integer, Integer> wrongPosition = new Pair<>(INITIAL_KNIGHT_POSITION.getX() + 1, INITIAL_KNIGHT_POSITION.getY() + 1);
-    assertFalse(logic.hasKnight(wrongPosition));
+    assertFalse(logic.isThereKnightAtPosition(wrongPosition));
   }
 
   @Test
   public void testPawnIsDetectedAtItsInitialPosition() {
-    assertTrue(logic.hasPawn(PAWN_POSITION));
+    assertTrue(logic.isTherePawnAtPosition(PAWN_POSITION));
   }
 
   @Test
   public void testPawnIsNotDetectedOutsideItsPosition() {
     final Pair<Integer, Integer> wrongPosition = new Pair<>(PAWN_POSITION.getX() + 1, PAWN_POSITION.getY() + 1);
-    assertFalse(logic.hasPawn(wrongPosition));
+    assertFalse(logic.isTherePawnAtPosition(wrongPosition));
   }
 
   @Test
   public void testKnightMakesAllowedMove() {
     final Pair<Integer, Integer> targetPosition = new Pair<>(3, 1);
-    logic.hit(targetPosition);
-    assertTrue(logic.hasKnight(targetPosition));
+    logic.moveKnightToPosition(targetPosition);
+    assertTrue(logic.isThereKnightAtPosition(targetPosition));
   }
 
   @Test
   public void testKnightDoesNotMakeNotAllowedMove() {
     final Pair<Integer, Integer> notAllowedTargetPosition = new Pair<>(INITIAL_KNIGHT_POSITION.getX() + 1, INITIAL_KNIGHT_POSITION.getY() + 1);
-    logic.hit(notAllowedTargetPosition);
-    assertFalse(logic.hasKnight(notAllowedTargetPosition));
+    logic.moveKnightToPosition(notAllowedTargetPosition);
+    assertFalse(logic.isThereKnightAtPosition(notAllowedTargetPosition));
   }
 
   @Test
   public void testKnightHitsPawnWhenMovingToItsPosition() {
-    assertTrue(logic.hit(PAWN_POSITION));
+    assertTrue(logic.moveKnightToPosition(PAWN_POSITION));
   }
 
   @Test
   public void testKnightDoesNotHitPawnIfItMissesIt() {
     final Pair<Integer, Integer> targetPosition = new Pair<>(3, 1);
-    assertFalse(logic.hit(targetPosition));
+    assertFalse(logic.moveKnightToPosition(targetPosition));
   }
 
   @ParameterizedTest
@@ -78,7 +78,7 @@ public class LogicTest {
   })
   public void testCannotMoveToOutOfBoundPosition(int row, int column) {
     final Pair<Integer, Integer> outOfBoundPosition = new Pair<>(row, column);
-    assertThrows(IndexOutOfBoundsException.class, () -> logic.hit(outOfBoundPosition));
+    assertThrows(IndexOutOfBoundsException.class, () -> logic.moveKnightToPosition(outOfBoundPosition));
   }
 
 }

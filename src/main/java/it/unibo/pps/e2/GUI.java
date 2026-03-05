@@ -28,7 +28,7 @@ public class GUI extends JFrame {
         ActionListener al = (e)->{
             final JButton bt = (JButton)e.getSource();
             final Pair<Integer,Integer> pos = buttons.get(bt);
-            if (logics.hit(pos)) {
+            if (logics.moveKnightToPosition(pos)) {
             	System.exit(0);
             } else {
                 draw();            	
@@ -49,8 +49,8 @@ public class GUI extends JFrame {
     
     private void draw() {
     	for (Entry<JButton,Pair<Integer,Integer>> entry: this.buttons.entrySet()) {
-    		String str = logics.hasPawn(entry.getValue()) ? "*" :
-    					 logics.hasKnight(entry.getValue()) ? "K" : " ";
+    		String str = logics.isTherePawnAtPosition(entry.getValue()) ? "*" :
+    					 logics.isThereKnightAtPosition(entry.getValue()) ? "K" : " ";
     		entry.getKey().setText(str);
     	}
     }

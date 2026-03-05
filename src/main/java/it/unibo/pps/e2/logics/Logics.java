@@ -10,18 +10,18 @@ public interface Logics{
      * @param position
      * @return whether the pawn has been hit 
      */
-    boolean hit(Pair<Integer, Integer> position);
+    boolean moveKnightToPosition(Pair<Integer, Integer> position);
     
     /**
      * @param position
      * @return whether position row,col has the knight
      */
-    boolean hasKnight(Pair<Integer, Integer> position);
+    boolean isThereKnightAtPosition(Pair<Integer, Integer> position);
     
     /**
      * @param position
      * @return whether position row,col has the pawn
      */
-    boolean hasPawn(Pair<Integer, Integer> position);
+    boolean isTherePawnAtPosition(Pair<Integer, Integer> position);
 
 }
