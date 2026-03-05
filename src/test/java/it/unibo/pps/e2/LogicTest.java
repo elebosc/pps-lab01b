@@ -1,7 +1,7 @@
 package it.unibo.pps.e2;
-import it.unibo.pps.e2.logics.Logics;
-import it.unibo.pps.e2.logics.LogicsImpl;
-import it.unibo.pps.e2.logics.components.Pair;
+import it.unibo.pps.e2.logic.Logic;
+import it.unibo.pps.e2.logic.LogicImpl;
+import it.unibo.pps.e2.utils.Pair;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -9,17 +9,20 @@ import org.junit.jupiter.params.provider.CsvSource;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * Test suite for the logic module of the game.
+ */
 public class LogicTest {
 
   private static final int BOARD_SIZE = 5;
   private static final Pair<Integer, Integer> INITIAL_KNIGHT_POSITION = new Pair<>(1, 0);
   private static final Pair<Integer, Integer> PAWN_POSITION = new Pair<>(0, 2);
 
-  private Logics logic;
+  private Logic logic;
 
   @BeforeEach
   public void initTest() {
-    this.logic = new LogicsImpl(BOARD_SIZE, INITIAL_KNIGHT_POSITION, PAWN_POSITION);
+    this.logic = new LogicImpl(BOARD_SIZE, INITIAL_KNIGHT_POSITION, PAWN_POSITION);
   }
 
   @Test
@@ -29,7 +32,10 @@ public class LogicTest {
 
   @Test
   public void testKnightIsNotDetectedOutsideItsPosition() {
-    final Pair<Integer, Integer> wrongPosition = new Pair<>(INITIAL_KNIGHT_POSITION.getX() + 1, INITIAL_KNIGHT_POSITION.getY() + 1);
+    final Pair<Integer, Integer> wrongPosition = new Pair<>(
+        INITIAL_KNIGHT_POSITION.getX() + 1,
+        INITIAL_KNIGHT_POSITION.getY() + 1
+    );
     assertFalse(logic.isKnightAtPosition(wrongPosition));
   }
 
@@ -40,7 +46,10 @@ public class LogicTest {
 
   @Test
   public void testPawnIsNotDetectedOutsideItsPosition() {
-    final Pair<Integer, Integer> wrongPosition = new Pair<>(PAWN_POSITION.getX() + 1, PAWN_POSITION.getY() + 1);
+    final Pair<Integer, Integer> wrongPosition = new Pair<>(
+      PAWN_POSITION.getX() + 1,
+      PAWN_POSITION.getY() + 1
+    );
     assertFalse(logic.isPawnAtPosition(wrongPosition));
   }
 
@@ -53,20 +62,25 @@ public class LogicTest {
 
   @Test
   public void testKnightDoesNotMakeNotAllowedMove() {
-    final Pair<Integer, Integer> notAllowedTargetPosition = new Pair<>(INITIAL_KNIGHT_POSITION.getX() + 1, INITIAL_KNIGHT_POSITION.getY() + 1);
+    final Pair<Integer, Integer> notAllowedTargetPosition = new Pair<>(
+      INITIAL_KNIGHT_POSITION.getX() + 1,
+      INITIAL_KNIGHT_POSITION.getY() + 1
+    );
     logic.moveKnightToPosition(notAllowedTargetPosition);
     assertFalse(logic.isKnightAtPosition(notAllowedTargetPosition));
   }
 
   @Test
   public void testKnightHitsPawnWhenMovingToItsPosition() {
-    assertTrue(logic.moveKnightToPosition(PAWN_POSITION));
+    logic.moveKnightToPosition(PAWN_POSITION);
+    assertTrue(logic.hasKnightHitPawn());
   }
 
   @Test
   public void testKnightDoesNotHitPawnIfItMissesIt() {
     final Pair<Integer, Integer> targetPosition = new Pair<>(3, 1);
-    assertFalse(logic.moveKnightToPosition(targetPosition));
+    logic.moveKnightToPosition(targetPosition);
+    assertFalse(logic.hasKnightHitPawn());
   }
 
   @ParameterizedTest

@@ -1,13 +1,15 @@
-package it.unibo.pps.e2.logics.components.board;
+package it.unibo.pps.e2.logic.components.board;
 
-import it.unibo.pps.e2.logics.components.Pair;
-import it.unibo.pps.e2.logics.components.pieces.Knight;
-import it.unibo.pps.e2.logics.components.pieces.KnightImpl;
-import it.unibo.pps.e2.logics.components.pieces.Pawn;
-import it.unibo.pps.e2.logics.components.pieces.PawnImpl;
+import it.unibo.pps.e2.utils.Pair;
+import it.unibo.pps.e2.logic.components.pieces.Knight;
+import it.unibo.pps.e2.logic.components.pieces.KnightImpl;
+import it.unibo.pps.e2.logic.components.pieces.Pawn;
 
 import java.util.Random;
 
+/**
+ * This class provides the implementation of the board.
+ */
 public class BoardImpl implements Board {
 
     private final int size;
@@ -16,7 +18,7 @@ public class BoardImpl implements Board {
 
     public BoardImpl(int size, int seed) {
         this.size = size;
-        this.pawn = new PawnImpl(this.getRandomEmptyPosition(seed));
+        this.pawn = new Pawn(this.getRandomEmptyPosition(seed));
         this.knight = new KnightImpl(this.getRandomEmptyPosition(seed));
     }
 
@@ -27,7 +29,7 @@ public class BoardImpl implements Board {
     ) {
         this.size = size;
         this.knight = new KnightImpl(initialKnightPosition);
-        this.pawn = new PawnImpl(pawnPosition);
+        this.pawn = new Pawn(pawnPosition);
     }
 
     private Pair<Integer,Integer> getRandomEmptyPosition(int seed) {
@@ -42,9 +44,19 @@ public class BoardImpl implements Board {
     }
 
     @Override
-    public boolean isPositionOutOfBound(Pair<Integer, Integer> position) {
+    public boolean isPositionOutOfBounds(Pair<Integer, Integer> position) {
         return position.getX() < 0 || position.getY() < 0
             || position.getX() >= this.size || position.getY() >= this.size;
+    }
+
+    @Override
+    public boolean isKnightAtPosition(Pair<Integer, Integer> position) {
+        return this.knight.getPosition().equals(position);
+    }
+
+    @Override
+    public boolean isPawnAtPosition(Pair<Integer, Integer> position) {
+        return this.pawn.position().equals(position);
     }
 
     @Override
@@ -60,16 +72,6 @@ public class BoardImpl implements Board {
     @Override
     public boolean hasKnightHitPawn() {
         return this.knight.getPosition().equals(this.pawn.position());
-    }
-
-    @Override
-    public boolean isKnightAtPosition(Pair<Integer, Integer> position) {
-        return this.knight.getPosition().equals(position);
-    }
-
-    @Override
-    public boolean isPawnAtPosition(Pair<Integer, Integer> position) {
-        return this.pawn.position().equals(position);
     }
 
 

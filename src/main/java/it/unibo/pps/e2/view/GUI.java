@@ -1,8 +1,8 @@
-package it.unibo.pps.e2;
+package it.unibo.pps.e2.view;
 
-import it.unibo.pps.e2.logics.Logics;
-import it.unibo.pps.e2.logics.LogicsImpl;
-import it.unibo.pps.e2.logics.components.Pair;
+import it.unibo.pps.e2.logic.Logic;
+import it.unibo.pps.e2.logic.LogicImpl;
+import it.unibo.pps.e2.utils.Pair;
 
 import javax.swing.*;
 import java.util.*;
@@ -14,11 +14,11 @@ public class GUI extends JFrame {
     
     private static final long serialVersionUID = -6218820567019985015L;
     private final Map<JButton, Pair<Integer,Integer>> buttons = new HashMap<>();
-    private final Logics logics;
+    private final Logic logics;
     private final static int SIZE = 5;
     
     public GUI() {
-        this.logics = new LogicsImpl(SIZE, 0);
+        this.logics = new LogicImpl(SIZE, 0);
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
         this.setSize(100*SIZE, 100*SIZE);
         
@@ -28,7 +28,8 @@ public class GUI extends JFrame {
         ActionListener al = (e)->{
             final JButton bt = (JButton)e.getSource();
             final Pair<Integer,Integer> pos = buttons.get(bt);
-            if (logics.moveKnightToPosition(pos)) {
+            logics.moveKnightToPosition(pos);
+            if (logics.hasKnightHitPawn()) {
             	System.exit(0);
             } else {
                 draw();            	

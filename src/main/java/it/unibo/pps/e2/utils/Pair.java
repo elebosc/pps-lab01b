@@ -1,4 +1,4 @@
-package it.unibo.pps.e2.logics.components;
+package it.unibo.pps.e2.utils;
 
 /*
  * A standard generic Pair<X,Y>, with getters, hashCode, equals, and toString well implemented. 

@@ -1,7 +1,10 @@
-package it.unibo.pps.e2.logics.components.pieces;
+package it.unibo.pps.e2.logic.components.pieces;
 
-import it.unibo.pps.e2.logics.components.Pair;
+import it.unibo.pps.e2.utils.Pair;
 
+/**
+ * This class provides the implementation for the knight piece.
+ */
 public class KnightImpl implements Knight {
 
     private static final int MOVE_DELTA = 3;

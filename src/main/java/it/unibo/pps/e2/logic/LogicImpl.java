@@ -1,18 +1,21 @@
-package it.unibo.pps.e2.logics;
+package it.unibo.pps.e2.logic;
 
-import it.unibo.pps.e2.logics.components.Pair;
-import it.unibo.pps.e2.logics.components.board.Board;
-import it.unibo.pps.e2.logics.components.board.BoardImpl;
+import it.unibo.pps.e2.utils.Pair;
+import it.unibo.pps.e2.logic.components.board.Board;
+import it.unibo.pps.e2.logic.components.board.BoardImpl;
 
-public class LogicsImpl implements Logics {
+/**
+ * This class provides the implementation of the logic of the game.
+ */
+public class LogicImpl implements Logic {
 
 	private final Board board;
 	 
-    public LogicsImpl(int boardSize, int seed) {
+    public LogicImpl(int boardSize, int seed) {
     	this.board = new BoardImpl(boardSize, seed);
     }
 
-	public LogicsImpl(
+	public LogicImpl(
 		int boardSize,
 		Pair<Integer, Integer> initialKnightPosition,
 		Pair<Integer, Integer> pawnPosition
@@ -21,15 +24,18 @@ public class LogicsImpl implements Logics {
 	}
 
 	@Override
-	public boolean moveKnightToPosition(Pair<Integer, Integer> position) {
-		if (this.board.isPositionOutOfBound(position)) {
+	public void moveKnightToPosition(Pair<Integer, Integer> position) {
+		if (this.board.isPositionOutOfBounds(position)) {
 			throw new IndexOutOfBoundsException("The targeted position is out of board bounds!");
 		}
 		if (this.board.canKnightMoveToPosition(position)) {
 			this.board.moveKnightToPosition(position);
-			return this.board.hasKnightHitPawn();
 		}
-		return false;
+	}
+
+	@Override
+	public boolean hasKnightHitPawn() {
+		return this.board.hasKnightHitPawn();
 	}
 
 	@Override
