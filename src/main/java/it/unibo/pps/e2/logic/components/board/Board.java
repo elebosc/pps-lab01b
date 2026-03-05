@@ -38,7 +38,7 @@ public interface Board {
      * @param position The targeted position.
      * @return True if the knight can move to the specified position, false otherwise.
      */
-    boolean canKnightMoveToPosition(Pair<Integer, Integer> position);
+    boolean canMoveKnightToPosition(Pair<Integer, Integer> position);
 
     /**
      * Moves the knight to the specified position.

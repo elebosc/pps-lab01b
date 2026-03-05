@@ -24,21 +24,6 @@ public class LogicImpl implements Logic {
 	}
 
 	@Override
-	public void moveKnightToPosition(Pair<Integer, Integer> position) {
-		if (this.board.isPositionOutOfBounds(position)) {
-			throw new IndexOutOfBoundsException("The targeted position is out of board bounds!");
-		}
-		if (this.board.canKnightMoveToPosition(position)) {
-			this.board.moveKnightToPosition(position);
-		}
-	}
-
-	@Override
-	public boolean hasKnightHitPawn() {
-		return this.board.hasKnightHitPawn();
-	}
-
-	@Override
 	public boolean isKnightAtPosition(Pair<Integer, Integer> position) {
 		return this.board.isKnightAtPosition(position);
 	}
@@ -46,6 +31,21 @@ public class LogicImpl implements Logic {
 	@Override
 	public boolean isPawnAtPosition(Pair<Integer, Integer> position) {
 		return this.board.isPawnAtPosition(position);
+	}
+
+	@Override
+	public void moveKnightToPosition(Pair<Integer, Integer> position) {
+		if (this.board.isPositionOutOfBounds(position)) {
+			throw new IndexOutOfBoundsException("The targeted position is out of the board bounds!");
+		}
+		if (this.board.canMoveKnightToPosition(position)) {
+			this.board.moveKnightToPosition(position);
+		}
+	}
+
+	@Override
+	public boolean hasKnightHitPawn() {
+		return this.board.hasKnightHitPawn();
 	}
 
 }

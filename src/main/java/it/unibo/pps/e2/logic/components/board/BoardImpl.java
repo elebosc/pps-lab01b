@@ -32,12 +32,16 @@ public class BoardImpl implements Board {
         this.pawn = new Pawn(pawnPosition);
     }
 
+    private int getRandomIndex(Random random) {
+        return random.nextInt(this.size);
+    }
+
     private Pair<Integer,Integer> getRandomEmptyPosition(int seed) {
         final Random random = new Random(seed);
-        Pair<Integer,Integer> position = new Pair<>(random.nextInt(this.size), random.nextInt(this.size));
+        Pair<Integer,Integer> position = new Pair<>(getRandomIndex(random), getRandomIndex(random));
         if (this.pawn != null) {
             while (this.pawn.position().equals(position)) {
-                position = new Pair<>(random.nextInt(this.size), random.nextInt(this.size));
+                position = new Pair<>(getRandomIndex(random), getRandomIndex(random));
             }
         }
         return position;
@@ -60,7 +64,7 @@ public class BoardImpl implements Board {
     }
 
     @Override
-    public boolean canKnightMoveToPosition(Pair<Integer, Integer> position) {
+    public boolean canMoveKnightToPosition(Pair<Integer, Integer> position) {
         return this.knight.canMoveToPosition(position);
     }
 
