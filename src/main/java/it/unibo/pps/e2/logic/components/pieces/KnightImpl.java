@@ -20,19 +20,20 @@ public class KnightImpl implements Knight {
         return this.position;
     }
 
-    @Override
-    public void setPosition(Pair<Integer, Integer> position) {
-        this.position = position;
-    }
-
-    @Override
-    public boolean canMoveToPosition(Pair<Integer, Integer> position) {
+    private boolean canMoveToPosition(Pair<Integer, Integer> position) {
         final Pair<Integer, Integer> moveOffsets = new Pair<>(
             position.getX() - this.position.getX(),
             position.getY() - this.position.getY()
         );
         return moveOffsets.getX() != 0 && moveOffsets.getY() != 0
-            && Math.abs(moveOffsets.getX()) + Math.abs(moveOffsets.getY()) == MOVE_DELTA;
+                && Math.abs(moveOffsets.getX()) + Math.abs(moveOffsets.getY()) == MOVE_DELTA;
+    }
+
+    @Override
+    public void moveToPositionIfAllowed(Pair<Integer, Integer> position) {
+        if (canMoveToPosition(position)) {
+            this.position = position;
+        }
     }
 
 }

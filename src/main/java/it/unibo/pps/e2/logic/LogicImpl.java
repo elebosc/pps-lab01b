@@ -34,13 +34,11 @@ public class LogicImpl implements Logic {
 	}
 
 	@Override
-	public void moveKnightToPosition(Pair<Integer, Integer> position) {
+	public void moveKnightToPositionIfAllowed(Pair<Integer, Integer> position) {
 		if (this.board.isPositionOutOfBounds(position)) {
 			throw new IndexOutOfBoundsException("The targeted position is out of the board bounds!");
 		}
-		if (this.board.canMoveKnightToPosition(position)) {
-			this.board.moveKnightToPosition(position);
-		}
+		this.board.moveKnightToPositionIfAllowed(position);
 	}
 
 	@Override

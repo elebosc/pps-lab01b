@@ -28,7 +28,7 @@ public class GUI extends JFrame {
         ActionListener al = (e)->{
             final JButton bt = (JButton)e.getSource();
             final Pair<Integer,Integer> pos = buttons.get(bt);
-            logics.moveKnightToPosition(pos);
+            logics.moveKnightToPositionIfAllowed(pos);
             if (logics.hasKnightHitPawn()) {
             	System.exit(0);
             } else {

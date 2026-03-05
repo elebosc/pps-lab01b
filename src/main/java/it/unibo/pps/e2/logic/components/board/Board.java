@@ -32,20 +32,12 @@ public interface Board {
     boolean isPawnAtPosition(Pair<Integer, Integer> position);
 
     /**
-     * Gets whether the knight is allowed to move to the specified position
-     * from its current position.
+     * Moves the knight to the specified position,
+     * if allowed to move it there from its current position.
      *
      * @param position The targeted position.
-     * @return True if the knight can move to the specified position, false otherwise.
      */
-    boolean canMoveKnightToPosition(Pair<Integer, Integer> position);
-
-    /**
-     * Moves the knight to the specified position.
-     *
-     * @param position The position to which the knight must be moved.
-     */
-    void moveKnightToPosition(Pair<Integer, Integer> position);
+    void moveKnightToPositionIfAllowed(Pair<Integer, Integer> position);
 
     /**
      * Gets whether the knight has hit the pawn or not.

@@ -73,37 +73,32 @@ public class BoardTest {
     }
 
     @Test
-    public void testKnightIsAbleToMakeAllowedMove() {
-        final Pair<Integer, Integer> targetPosition = new Pair<>(3, 1);
-        assertTrue(this.board.canMoveKnightToPosition(targetPosition));
-    }
-
-    @Test
-    public void testKnightIsNotAbleToMakeNotAllowedMove() {
-        final Pair<Integer, Integer> targetPosition = new Pair<>(
-            INITIAL_KNIGHT_POSITION.getX() + 1,
-            INITIAL_KNIGHT_POSITION.getY() + 1
-        );
-        assertFalse(this.board.canMoveKnightToPosition(targetPosition));
-    }
-
-    @Test
     public void testKnightMakesAllowedMove() {
         final Pair<Integer, Integer> targetPosition = new Pair<>(3, 1);
-        this.board.moveKnightToPosition(targetPosition);
+        this.board.moveKnightToPositionIfAllowed(targetPosition);
         assertTrue(this.board.isKnightAtPosition(targetPosition));
     }
 
     @Test
+    public void testKnightDoesNotMakeNotAllowedMove() {
+        final Pair<Integer, Integer> targetPosition = new Pair<>(
+            INITIAL_KNIGHT_POSITION.getX() + 1,
+            INITIAL_KNIGHT_POSITION.getY() + 1
+        );
+        this.board.moveKnightToPositionIfAllowed(targetPosition);
+        assertFalse(this.board.isKnightAtPosition(targetPosition));
+    }
+
+    @Test
     public void testKnightHitsPawnWhenMovingToItsPosition() {
-        this.board.moveKnightToPosition(PAWN_POSITION);
+        this.board.moveKnightToPositionIfAllowed(PAWN_POSITION);
         assertTrue(this.board.hasKnightHitPawn());
     }
 
     @Test
     public void testKnightDoesNotHitPawnIfItMissesIt() {
         final Pair<Integer, Integer> targetPosition = new Pair<>(3, 1);
-        this.board.moveKnightToPosition(targetPosition);
+        this.board.moveKnightToPositionIfAllowed(targetPosition);
         assertFalse(this.board.hasKnightHitPawn());
     }
 

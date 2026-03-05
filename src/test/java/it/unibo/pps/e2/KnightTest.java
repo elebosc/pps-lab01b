@@ -28,22 +28,20 @@ public class KnightTest {
     }
 
     @Test
-    public void testPositionIsCorrectlyChanged() {
+    public void testKnightMakesAllowedMove() {
         final Pair<Integer, Integer> targetPosition = new Pair<>(3, 1);
-        this.knight.setPosition(targetPosition);
+        this.knight.moveToPositionIfAllowed(targetPosition);
         assertEquals(targetPosition, this.knight.getPosition());
     }
 
     @Test
-    public void testValidMoveIsDeclaredAsAllowed() {
-        final Pair<Integer, Integer> targetPosition = new Pair<>(3, 1);
-        assertTrue(this.knight.canMoveToPosition(targetPosition));
-    }
-
-    @Test
-    public void testNotValidMoveIsNotDeclaredAsAllowed() {
-        final Pair<Integer, Integer> targetPosition = new Pair<>(0, 0);
-        assertFalse(this.knight.canMoveToPosition(targetPosition));
+    public void testKnightDoesNotMakeNotAllowedMove() {
+        final Pair<Integer, Integer> targetPosition = new Pair<>(
+            INITIAL_KNIGHT_POSITION.getX() + 1,
+            INITIAL_KNIGHT_POSITION.getY() + 1
+        );
+        this.knight.moveToPositionIfAllowed(targetPosition);
+        assertNotEquals(targetPosition, this.knight.getPosition());
     }
 
 }

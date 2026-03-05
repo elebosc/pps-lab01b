@@ -63,14 +63,10 @@ public class BoardImpl implements Board {
         return this.pawn.position().equals(position);
     }
 
-    @Override
-    public boolean canMoveKnightToPosition(Pair<Integer, Integer> position) {
-        return this.knight.canMoveToPosition(position);
-    }
 
     @Override
-    public void moveKnightToPosition(Pair<Integer, Integer> position) {
-        this.knight.setPosition(position);
+    public void moveKnightToPositionIfAllowed(Pair<Integer, Integer> position) {
+        this.knight.moveToPositionIfAllowed(position);
     }
 
     @Override

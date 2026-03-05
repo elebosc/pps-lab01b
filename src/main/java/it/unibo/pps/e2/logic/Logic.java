@@ -24,12 +24,13 @@ public interface Logic {
     boolean isPawnAtPosition(Pair<Integer, Integer> position);
 
     /**
-     * Attempts to move the knight to the specified position, if possible.
+     * Attempts to move the knight to the specified position,
+     * if allowed to move it there from its current position.
      *
-     * @param position The position to move the knight to.
+     * @param position The targeted position.
      * @throws IndexOutOfBoundsException if the position is out of the bounds of the board.
      */
-    void moveKnightToPosition(Pair<Integer, Integer> position);
+    void moveKnightToPositionIfAllowed(Pair<Integer, Integer> position);
 
     /**
      * Gets whether the knight has hit the pawn or not.

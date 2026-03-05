@@ -15,19 +15,11 @@ public interface Knight {
     Pair<Integer, Integer> getPosition();
 
     /**
-     * Sets the position of the knight to the specified one.
+     * Sets the position of the knight to the specified one,
+     * if allowed to move there from its current position.
      *
      * @param position The targeted position.
      */
-    void setPosition(Pair<Integer, Integer> position);
-
-    /**
-     * Gets whether the knight is allowed to move to the specified position
-     * from its current position.
-     *
-     * @param position The targeted position.
-     * @return True if the knight can move to the specified position, false otherwise.
-     */
-    boolean canMoveToPosition(Pair<Integer, Integer> position);
+    void moveToPositionIfAllowed(Pair<Integer, Integer> position);
 
 }
