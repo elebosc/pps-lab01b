@@ -1,21 +1,25 @@
 package it.unibo.pps.e2.logics;
 
-import it.unibo.pps.e2.Pair;
+import it.unibo.pps.e2.logics.components.Pair;
+import it.unibo.pps.e2.logics.components.pieces.Knight;
+import it.unibo.pps.e2.logics.components.pieces.KnightImpl;
+import it.unibo.pps.e2.logics.components.pieces.Pawn;
+import it.unibo.pps.e2.logics.components.pieces.PawnImpl;
 
 import java.util.*;
 
 public class LogicsImpl implements Logics {
 	
-	private final Pair<Integer,Integer> pawnPosition;
-	private Pair<Integer,Integer> knightPosition;
+	private final Pawn pawn;
+	private final Knight knight;
 	private final Random random;
 	private final int boardSize;
 	 
     public LogicsImpl(int boardSize, int seed) {
     	this.boardSize = boardSize;
 		this.random = new Random(seed);
-        this.pawnPosition = this.pickRandomEmptyPosition();
-        this.knightPosition = this.pickRandomEmptyPosition();
+		this.pawn = new PawnImpl(this.pickRandomEmptyPosition());
+        this.knight = new KnightImpl(this.pickRandomEmptyPosition());
     }
 
 	public LogicsImpl(
@@ -25,14 +29,14 @@ public class LogicsImpl implements Logics {
 	) {
 		this.boardSize = boardSize;
 		this.random = new Random();
-		this.knightPosition = initialKnightPosition;
-		this.pawnPosition = pawnPosition;
+		this.knight = new KnightImpl(initialKnightPosition);
+		this.pawn = new PawnImpl(pawnPosition);
 	}
     
 	private Pair<Integer,Integer> pickRandomEmptyPosition() {
     	Pair<Integer,Integer> position = new Pair<>(this.random.nextInt(boardSize), this.random.nextInt(boardSize));
-		if (this.pawnPosition != null) {
-			while (this.pawnPosition.equals(position)) {
+		if (this.pawn.getPosition() != null) {
+			while (this.pawn.getPosition().equals(position)) {
 				position = new Pair<>(this.random.nextInt(boardSize), this.random.nextInt(boardSize));
 			}
 		}
@@ -47,28 +51,32 @@ public class LogicsImpl implements Logics {
 	}
 
 	private boolean isKnightMoveAllowed(Pair<Integer, Integer> position) {
-		int x = position.getX() - this.knightPosition.getX();
-		int y = position.getY() - this.knightPosition.getY();
-		return x != 0 && y != 0 && Math.abs(x) + Math.abs(y) == 3;
+		final Pair<Integer, Integer> targetPosition = new Pair<>(
+			position.getX() - this.knight.getPosition().getX(),
+			position.getY() - this.knight.getPosition().getY()
+		);
+		return targetPosition.getX() != 0 && targetPosition.getY() != 0
+			&& Math.abs(targetPosition.getX()) + Math.abs(targetPosition.getY()) == 3;
 	}
     
 	@Override
 	public boolean hit(Pair<Integer, Integer> position) {
 		checkPositionIsNotOutOfBound(position);
 		if (isKnightMoveAllowed(position)) {
-			this.knightPosition = position;
-			return this.pawnPosition.equals(this.knightPosition);
+			this.knight.setPosition(position);
+			return this.pawn.getPosition().equals(this.knight.getPosition());
 		}
 		return false;
 	}
 
 	@Override
 	public boolean hasKnight(Pair<Integer, Integer> position) {
-		return this.knightPosition.equals(position);
+		return this.knight.getPosition().equals(position);
 	}
 
 	@Override
 	public boolean hasPawn(Pair<Integer, Integer> position) {
-		return this.pawnPosition.equals(position);
+		return this.pawn.getPosition().equals(position);
 	}
+
 }

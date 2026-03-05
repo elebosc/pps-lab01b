@@ -1,6 +1,7 @@
 package it.unibo.pps.e2;
 import it.unibo.pps.e2.logics.Logics;
 import it.unibo.pps.e2.logics.LogicsImpl;
+import it.unibo.pps.e2.logics.components.Pair;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;

@@ -1,6 +1,6 @@
 package it.unibo.pps.e2.logics;
 
-import it.unibo.pps.e2.Pair;
+import it.unibo.pps.e2.logics.components.Pair;
 
 public interface Logics{
     
